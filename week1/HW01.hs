@@ -30,14 +30,16 @@ doubleEveryOther (x:y:ys) = x : y*2 : doubleEveryOther ys
 
 -- Calculate the sum of all the digits in every Integer.
 sumDigits :: [Integer] -> Integer
-sumDigits = undefined
-
+sumDigits = sum . concatMap toRevDigits
 
 -- Exercise 5 -----------------------------------------
 
+doubleEveryOtherDigits :: Integer -> [Integer]
+doubleEveryOtherDigits n = doubleEveryOther (toRevDigits n)
+
 -- Validate a credit card number using the above functions.
 luhn :: Integer -> Bool
-luhn = undefined
+luhn n = (sumDigits (doubleEveryOtherDigits n) `mod` 10) == 0
 
 -- Exercise 6 -----------------------------------------
 
