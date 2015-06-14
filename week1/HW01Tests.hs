@@ -39,7 +39,7 @@ testDoubleEveryOther (xs, ys) = doubleEveryOther xs == ys
 
 ex3Tests :: [Test]
 ex3Tests = [ Test "doubleEveryOther test" testDoubleEveryOther
-             [([4, 9, 5, 5], [4, 18, 5, 10]), ([0, 0], [0, 0])
+             [ ([4, 9, 5, 5], [4, 18, 5, 10]), ([0, 0], [0, 0])
              , ([5, 9, 5], [5, 18, 5])
              ]
            ]
@@ -66,8 +66,34 @@ ex5Tests = [ Test "luhn test" testLuhn
 
 -- Exercise 6 -----------------------------------------
 
+testHanoi :: (Integer, Peg, Peg, Peg, [Move]) -> Bool
+testHanoi (n, p1, p2, p3, ms) = (hanoi n p1 p2 p3) == ms
+
 ex6Tests :: [Test]
-ex6Tests = []
+ex6Tests = [ Test "hanoi test" testHanoi
+             [ (2, "a", "b", "c", [("a", "c"), ("a", "b"), ("c", "b")])
+             , (3, "a", "b", "c", [ ("a", "b"), ("a", "c"), ("b", "c")
+                                  , ("a", "b")
+                                  , ("c", "a"), ("c", "b"), ("a", "b")
+                                  ])
+             ]
+           ]
+
+-- (Opional Exercise 7) ------------------------------
+
+testHanoi4 :: (Integer, Peg, Peg, Peg, Peg, [Move]) -> Bool
+testHanoi4 (n, p1, p2, p3, p4, ms) = (hanoi4 n p1 p2 p3 p4) == ms
+
+ex7Tests :: [Test]
+ex7Tests = [ Test "hanoi4 test" testHanoi4
+              [ (1, "a", "b", "c", "d", [("a", "b")])
+              , (2, "a", "b", "c", "d", [("a", "c"), ("a", "b"), ("c", "b")])
+              , (3, "a", "b", "c", "d", [ ("a", "c"), ("a", "d")
+                                        , ("a", "b")
+                                        , ("d", "b"), ("c", "b")
+                                        ])
+              ]
+            ]
 
 -- All Tests ------------------------------------------
 
