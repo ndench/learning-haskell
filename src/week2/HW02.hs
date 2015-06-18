@@ -23,13 +23,24 @@ colors = [Red, Green, Blue, Yellow, Orange, Purple]
 
 -- Get the number of exact matches between the actual code and the guess
 exactMatches :: Code -> Code -> Int
-exactMatches = undefined
+exactMatches [] _          = 0
+exactMatches _ []          = 0
+exactMatches (x:xs) (y:ys)
+    | x == y    = 1 + exactMatches xs ys
+    | otherwise = exactMatches xs ys
 
 -- Exercise 2 -----------------------------------------
 
 -- For each peg in xs, count how many times is occurs in ys
+frequency :: Eq a => a -> [a] -> Int
+frequency x [] = 0
+frequency x (y:ys)
+    | x == y    = 1 + frequency x ys
+    | otherwise = frequency x ys
+
 countColors :: Code -> [Int]
-countColors = undefined
+--countColors c = map (frequency c) colors
+countColors x = [frequency c x | c <- colors]
 
 -- Count number of matches between the actual code and the guess
 matches :: Code -> Code -> Int
