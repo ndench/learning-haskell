@@ -53,7 +53,7 @@ zipCountCodes c1 c2 =
     in
         zip c1Count c2Count
 
--- Find the minimum of each tuple in a list of touples
+-- Find the minimum of each tuple in a list of tuples
 mapTupleMin :: [(Int, Int)] -> [Int]
 mapTupleMin [] = []
 mapTupleMin ((x,y):zs) = min x y : mapTupleMin zs
@@ -73,29 +73,51 @@ matches c1 c2 =
 getMove :: Code -> Code -> Move
 getMove secret guess =
     let
-        exact   = exactMatches secret guess
-        regular = (matches secret guess) - exact
+        exactCount   = exactMatches secret guess
+        regularCount = (matches secret guess) - exactCount
     in
-        Move guess exact regular
+        Move guess exactCount regularCount
 
 -- Exercise 4 -----------------------------------------
 
+-- A Code is consistent with a Move if it has the same
+-- number of exact and regular matches with the guess
+-- inside the Move as the guess had with the secret
+-- ie. the Code could be the secret that generated the Move
 isConsistent :: Move -> Code -> Bool
-isConsistent move code =
+isConsistent m c =
     let
-        guess = code move
-        guessExact = exact move
-        guessRegular = regular move
+        m2                = getMove c (code m)
+        consistentExact   = (exact m2) == (exact m)
+        consistentRegular = (regular m2) == (regular m)
+    in
+        consistentExact && consistentRegular
 
 -- Exercise 5 -----------------------------------------
 
+-- Filter a list of Code to only contain those that are
+-- consistent with the Move
 filterCodes :: Move -> [Code] -> [Code]
-filterCodes = undefined
+filterCodes _ [] = []
+filterCodes m (c:cs)
+  | consistent = c : filterCodes m cs
+  | otherwise = filterCodes m cs
+  where
+    consistent = isConsistent m c
 
 -- Exercise 6 -----------------------------------------
 
+-- Generate all the Codes of a length n
 allCodes :: Int -> [Code]
-allCodes = undefined
+allCodes 0 = []
+allCodes n = allCodes' $ allCodes (n-1)
+
+-- Take all the codes of length n-1 and produce all
+-- codes of length n
+allCodes' :: [Code] -> [Code]
+allCodes' [] = map (:[]) colors
+allCodes' (c:[]) = map (:c) colors
+allCodes' (c:cs) = map (:c) colors ++ allCodes' cs
 
 -- Exercise 7 -----------------------------------------
 
