@@ -101,7 +101,7 @@ filterCodes :: Move -> [Code] -> [Code]
 filterCodes _ [] = []
 filterCodes m (c:cs)
   | consistent = c : filterCodes m cs
-  | otherwise = filterCodes m cs
+  | otherwise  = filterCodes m cs
   where
     consistent = isConsistent m c
 
@@ -115,14 +115,30 @@ allCodes n = allCodes' $ allCodes (n-1)
 -- Take all the codes of length n-1 and produce all
 -- codes of length n
 allCodes' :: [Code] -> [Code]
-allCodes' [] = map (:[]) colors
+allCodes' []     = map (:[]) colors
 allCodes' (c:[]) = map (:c) colors
 allCodes' (c:cs) = map (:c) colors ++ allCodes' cs
 
 -- Exercise 7 -----------------------------------------
 
 solve :: Code -> [Move]
-solve = undefined
+solve secret =
+    let
+        secretLen     = length secret
+        possibleCodes = allCodes secretLen
+        firstGuess    = replicate secretLen Red
+        firstMove     = getMove secret firstGuess
+    in
+        solve' firstMove possibleCodes
+
+solve' :: Code -> Move -> [Code] -> [Move]
+solve' _ m []     = [m]
+solve' s m (c:cs) =
+    let
+        consistentCodes = filterCodes m (c:cs)
+        nextMove = getMove s c
+    in
+        m : (solve' s nextMove cs)
 
 -- Bonus ----------------------------------------------
 

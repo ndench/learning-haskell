@@ -71,7 +71,11 @@ ex5Tests = [ testF2 "filterCodes test" filterCodes
 -- Exercise 6 -----------------------------------------
 
 ex6Tests :: [Test]
-ex6Tests = []
+ex6Tests = [ testF2 "solve test" solve 
+             [
+
+             ]
+           ]
 
 -- Exercise 7 -----------------------------------------
 
