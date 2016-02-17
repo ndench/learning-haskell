@@ -42,7 +42,11 @@ frequency x (y:ys)
 
 -- Count how many times each color appears in the code
 countColors :: Code -> [Int]
-countColors x = [frequency c x | c <- colors]
+countColors x = 
+    let 
+        blah c = frequency c x 
+    in 
+        map blah colors
 
 -- Zip up the color count of two codes
 zipCountCodes :: Code -> Code -> [(Int, Int)]
@@ -109,15 +113,14 @@ filterCodes m (c:cs)
 
 -- Generate all the Codes of a length n
 allCodes :: Int -> [Code]
-allCodes 0 = []
-allCodes n = allCodes' $ allCodes (n-1)
-
--- Take all the codes of length n-1 and produce all
--- codes of length n
-allCodes' :: [Code] -> [Code]
-allCodes' []     = map (:[]) colors
-allCodes' (c:[]) = map (:c) colors
-allCodes' (c:cs) = map (:c) colors ++ allCodes' cs
+allCodes n
+  | n <= 0 = []
+  | n == 1 = map (:[]) colors
+  | otherwise =
+        let 
+            blah c = map (c:) (allCodes (n-1))
+        in 
+            concatMap blah colors
 
 -- Exercise 7 -----------------------------------------
 
