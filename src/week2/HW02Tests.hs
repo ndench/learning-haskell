@@ -71,9 +71,22 @@ ex5Tests = [ testF2 "filterCodes test" filterCodes
 -- Exercise 6 -----------------------------------------
 
 ex6Tests :: [Test]
-ex6Tests = [ testF2 "solve test" solve 
-             [
-
+ex6Tests = [ testF1 "allCodes test" allCodes 
+             [ ( 1, [[Red], [Green], [Blue], [Yellow], [Orange], [Purple]] )
+             , ( 2, [ [Red, Red], [Red, Green], [Red, Blue], [Red, Yellow], [Red, Orange], [Red, Purple]
+                    , [Green, Red], [Blue, Red], [Yellow, Red], [Orange, Red], [Purple, Red]
+                    , [Green, Red], [Green, Green], [Green, Blue], [Green, Yellow], [Green, Orange], [Green, Purple]
+                    , [Red, Green], [Blue, Green], [Yellow, Green], [Orange, Green], [Purple, Green]
+                    , [Blue, Red], [Blue, Green], [Blue, Blue], [Blue, Yellow], [Blue, Orange], [Blue, Purple]
+                    , [Red, Blue], [Green, Blue], [Yellow, Blue], [Orange, Blue], [Purple, Blue]
+                    , [Yellow, Red], [Yellow, Green], [Yellow, Blue], [Yellow, Yellow], [Yellow, Orange], [Yellow, Purple]
+                    , [Red, Yellow], [Green, Yellow], [Blue, Yellow], [Orange, Yellow], [Purple, Yellow]
+                    , [Orange, Red], [Orange, Green], [Orange, Blue], [Orange, Yellow], [Orange, Orange], [Orange, Purple]
+                    , [Red, Orange], [Green, Orange], [Blue, Orange], [Yellow, Orange], [Purple, Orange]
+                    , [Purple, Red], [Purple, Green], [Purple, Blue], [Purple, Yellow], [Purple, Orange], [Purple, Purple]
+                    , [Red, Purple], [Green, Purple], [Blue, Purple], [Yellow, Purple], [Orange, Purple]
+                    ]
+               )
              ]
            ]
 

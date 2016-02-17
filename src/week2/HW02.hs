@@ -33,7 +33,7 @@ exactMatches (x:xs) (y:ys)
 
 -- Exercise 2 -----------------------------------------
 
--- For each peg in xs, count how many times is occurs in ys
+-- For each peg in x, count how many times is occurs in ys
 frequency :: Eq a => a -> [a] -> Int
 frequency _ [] = 0
 frequency x (y:ys)
@@ -122,23 +122,24 @@ allCodes' (c:cs) = map (:c) colors ++ allCodes' cs
 -- Exercise 7 -----------------------------------------
 
 solve :: Code -> [Move]
-solve secret =
-    let
-        secretLen     = length secret
-        possibleCodes = allCodes secretLen
-        firstGuess    = replicate secretLen Red
-        firstMove     = getMove secret firstGuess
-    in
-        solve' firstMove possibleCodes
+solve = undefined
+{-solve secret =-}
+    {-let-}
+        {-secretLen     = length secret-}
+        {-possibleCodes = allCodes secretLen-}
+        {-firstGuess    = replicate secretLen Red-}
+        {-firstMove     = getMove secret firstGuess-}
+    {-in-}
+        {-solve' firstMove possibleCodes-}
 
-solve' :: Code -> Move -> [Code] -> [Move]
-solve' _ m []     = [m]
-solve' s m (c:cs) =
-    let
-        consistentCodes = filterCodes m (c:cs)
-        nextMove = getMove s c
-    in
-        m : (solve' s nextMove cs)
+{-solve' :: Code -> Move -> [Code] -> [Move]-}
+{-solve' _ m []     = [m]-}
+{-solve' s m (c:cs) =-}
+    {-let-}
+        {-consistentCodes = filterCodes m (c:cs)-}
+        {-nextMove = getMove s c-}
+    {-in-}
+        {-m : (solve' s nextMove cs)-}
 
 -- Bonus ----------------------------------------------
 
