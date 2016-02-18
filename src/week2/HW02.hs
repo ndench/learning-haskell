@@ -33,7 +33,7 @@ exactMatches (x:xs) (y:ys)
 
 -- Exercise 2 -----------------------------------------
 
--- For each peg in x, count how many times is occurs in ys
+-- Count how many times x occurs in ys
 frequency :: Eq a => a -> [a] -> Int
 frequency _ [] = 0
 frequency x (y:ys)
@@ -42,11 +42,11 @@ frequency x (y:ys)
 
 -- Count how many times each color appears in the code
 countColors :: Code -> [Int]
-countColors x = 
+countColors c = 
     let 
-        blah c = frequency c x 
+        count x = frequency x c 
     in 
-        map blah colors
+        map count colors
 
 -- Zip up the color count of two codes
 zipCountCodes :: Code -> Code -> [(Int, Int)]
@@ -118,9 +118,10 @@ allCodes n
   | n == 1 = map (:[]) colors
   | otherwise =
         let 
-            blah c = map (c:) (allCodes (n-1))
+            -- For each code returned by allCodes n-1, prepend c
+            addColor c = map (c:) (allCodes $ n-1)
         in 
-            concatMap blah colors
+            concatMap addColor colors
 
 -- Exercise 7 -----------------------------------------
 
