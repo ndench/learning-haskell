@@ -126,24 +126,17 @@ allCodes n
 -- Exercise 7 -----------------------------------------
 
 solve :: Code -> [Move]
-solve = undefined
-{-solve secret =-}
-    {-let-}
-        {-secretLen     = length secret-}
-        {-possibleCodes = allCodes secretLen-}
-        {-firstGuess    = replicate secretLen Red-}
-        {-firstMove     = getMove secret firstGuess-}
-    {-in-}
-        {-solve' firstMove possibleCodes-}
+solve secret = 
+    let
+        firstGuess = replicate (length secret) Red
+        firstMove = getMove secret firstGuess
+        possibleCodes = allCodes (length secret)
+    in
+        getMove secret firstGuess : []
 
-{-solve' :: Code -> Move -> [Code] -> [Move]-}
-{-solve' _ m []     = [m]-}
-{-solve' s m (c:cs) =-}
-    {-let-}
-        {-consistentCodes = filterCodes m (c:cs)-}
-        {-nextMove = getMove s c-}
-    {-in-}
-        {-m : (solve' s nextMove cs)-}
+generateMoves :: [Code] -> [Move] -> [Move]
+generateMoves [] xs = xs
+generateMoves ys xs = 
 
 -- Bonus ----------------------------------------------
 
