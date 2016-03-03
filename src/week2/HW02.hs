@@ -129,14 +129,20 @@ solve :: Code -> [Move]
 solve secret = 
     let
         firstGuess = replicate (length secret) Red
-        firstMove = getMove secret firstGuess
         possibleCodes = allCodes (length secret)
     in
-        getMove secret firstGuess : []
+        generateMoves secret possibleCodes []
 
-generateMoves :: [Code] -> [Move] -> [Move]
-generateMoves [] xs = xs
-generateMoves ys xs = 
+generateMoves :: Code -> [Code] -> [Move] -> [Move]
+generateMoves _ [] ms = ms
+generateMoves s (c:[]) ms = ms ++ [getMove s c]
+generateMoves s (c:cs) ms
+  | s == c = ms ++ [nextMove]
+  | otherwise = generateMoves s consistentCodes $ ms ++ [nextMove]
+  where
+    nextMove = getMove s c
+    consistentCodes = filter (isConsistent nextMove) $ tail cs
+
 
 -- Bonus ----------------------------------------------
 
